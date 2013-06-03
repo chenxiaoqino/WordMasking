@@ -1,20 +1,12 @@
-	if(!window.jQuery)
-	{
-		var script = document.createElement('script');
-		script.type = "text/javascript";
-		script.src = "http://code.jquery.com/jquery-1.9.0.js";
-		document.getElementsByTagName('head')[0].appendChild(script);
-		return;
-	}
-	
-(function ($) {
-    $.fn.wordMasking = function () {
-	
-		var color={
+var plugin_insert=(function ($) {
+    $.fn.wordMasking = function (colorOptions) {
+		var defaultColor={
 			'default':'#fcc',
 			'background':'#fff',
 			'text':'#000'
 		}
+		var color = $.extend(defaultColor, colorOptions);
+		
 		return $(this).css({
 			'background':color.default,
 			'color':color.default
@@ -42,5 +34,17 @@
 					'color':color.default
 				});	
 		});
-	
-})(jQuery);
+	}
+});
+if(!window.jQuery)
+{
+	var script = document.createElement('script');
+	script.type = "text/javascript";
+	script.src = "http://code.jquery.com/jquery.js";
+	script.onload = function(){plugin_insert(jQuery)};
+	document.getElementsByTagName('head')[0].appendChild(script);
+}
+else
+{
+	plugin_insert(jQuery);
+}
